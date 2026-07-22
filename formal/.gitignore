@@ -1,0 +1,8 @@
+# Lean / Lake build artifacts — never commit these (the mathlib olean cache is multi-GB).
+/.lake/
+# Local scratch used while checking axioms.
+/AxCheck.lean
+/AxCheckCI.lean
+/axioms.txt
+/lake_update.log
+/cache_get.log

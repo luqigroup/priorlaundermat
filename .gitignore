@@ -1,0 +1,20 @@
+# Downloaded inputs and produced artifacts (see README: everything here is fetched or regenerated)
+data/
+results/
+figures/
+
+# Lean build tree (restored by `lake exe cache get`)
+formal/.lake/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/

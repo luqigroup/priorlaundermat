@@ -1,0 +1,66 @@
+name: Lean formal proofs (p:law)
+
+# Machine-checks the Lean 4 + mathlib formalization of Theorem 1 (`p:law`) of the
+# "Prior laundering" paper, under `formal/`. A green run = the Lean kernel accepted the
+# proofs. The job downloads the PREBUILT mathlib olean cache (`lake exe cache get`), so it
+# never compiles mathlib from source.
+
+on:
+  push:
+    paths:
+      - 'formal/**'
+      - '.github/workflows/lean.yml'
+  pull_request:
+    paths:
+      - 'formal/**'
+      - '.github/workflows/lean.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and kernel-check p:law
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Guard against silent cheats before we even build.
+      - name: Reject sorry / admit / native_decide in the sources
+        run: |
+          if grep -RnE '\b(sorry|admit)\b|native_decide' formal/*.lean; then
+            echo "::error::Found sorry/admit/native_decide in formal/*.lean"
+            exit 1
+          fi
+          echo "No sorry/admit/native_decide found."
+
+      # Installs elan (toolchain from formal/lean-toolchain), runs `lake exe cache get`
+      # to fetch prebuilt mathlib oleans, then `lake build`. A successful build is the
+      # machine-check.
+      - name: Build (elan + mathlib cache + lake build)
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: "formal"
+          use-mathlib-cache: "true"
+          build-args: "PriorLaundering"
+
+      # Print the axiom dependencies of the main theorems and fail if `sorryAx` appears.
+      # This is the definitive honesty check: the proofs must rest only on mathlib's
+      # standard axioms (propext, Classical.choice, Quot.sound), never on sorry.
+      - name: Print axioms and reject sorryAx
+        working-directory: formal
+        run: |
+          cat > AxCheckCI.lean <<'EOF'
+          import PriorLaundering
+          open PriorLaundering
+          #print axioms curatedPrior_eq_withDensity
+          #print axioms pLaw_partA
+          #print axioms comp_curatedPrior_eq_withDensity
+          #print axioms partB_logF_integral_nonneg
+          #print axioms pLaw_partB
+          EOF
+          lake env lean AxCheckCI.lean | tee axioms.txt
+          if grep -q 'sorryAx' axioms.txt; then
+            echo "::error::A main theorem depends on sorryAx"
+            exit 1
+          fi
+          echo "No sorryAx in the axiom dependencies of the main theorems."

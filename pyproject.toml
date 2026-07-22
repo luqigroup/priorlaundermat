@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "priorlaundermat"
+version = "1.0.0"
+description = "Prior laundering: priors trained on legacy reconstructions inherit undetectable overconfidence"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Ali Siahkoohi", email = "alisk@rice.edu" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy",
+    "scipy",
+    "h5py",
+    "matplotlib",
+    "torch>=2.0",
+    "diffusers>=0.27",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+# Only for regenerating the seismic dataset and running the Born operator.
+seismic = ["devito>=4.8"]
+test = ["pytest"]
+
+[project.urls]
+Repository = "https://github.com/luqigroup/priorlaundermat"
+
+[tool.setuptools.packages.find]
+include = ["priorlaundermat*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

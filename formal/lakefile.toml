@@ -1,0 +1,230 @@
+name = "PriorLaundering"
+defaultTargets = ["PriorLaundering", "SingleBestCollapse", "BlindFreeze", "NonIdentifiability", "Fixpoint", "PosteriorMean", "PosteriorMeanRegularity", "NearNullLeCam", "ChiSquaredTV", "GaussianPdfIntegral", "GaussianChiSquared", "GaussianCDF", "Coverage", "DeFreeze", "RecoverConvergence", "NearNullFreeze", "LogPartitionSmooth", "MatrixFloor", "NearNullFactored", "ChiSquaredInvariance", "ChiSquaredPi", "ChiSquaredTensor", "GaussianChiSquaredVar", "MultivariateGaussianChiSquared", "MultivariateGaussianScale", "MultivariateGaussianSpread", "MultivariateGaussianWhitening", "NearNullComposed", "MapNearNullTube", "NearNullOperator", "LogPartitionGradient", "NearNullDefinitional", "GaussianDataLaw", "LogPartitionClosure", "SelfCheckAndSharpness", "DataCovarianceSqrt", "MapNearNullSharp", "HilbertAssembly", "PinskerAndNonlinear", "SpreadKL", "MeanKL"]
+
+# Machine-checked formalization of Theorem 1 (`p:law`, the EM-step identity) of
+# "Prior laundering". Mathlib pinned to a release whose toolchain matches
+# `lean-toolchain` (leanprover/lean4:v4.31.0) so that `lake exe cache get`
+# downloads PREBUILT oleans (no from-source mathlib compile).
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.31.0"
+
+[[lean_lib]]
+name = "PriorLaundering"
+
+# The single-best collapse (Theorem `p:map`), linear-algebra core + deterministic collapse
+# + zero-coverage mechanism. Same pinned mathlib; prebuilt oleans via `lake exe cache get`.
+[[lean_lib]]
+name = "SingleBestCollapse"
+
+# The blind-fiber freeze (Proposition `p:blind`): the general fiber-conditional freeze
+# (reusing PriorLaundering's curatedPrior) + the Gaussian blind-block precision identity.
+[[lean_lib]]
+name = "BlindFreeze"
+
+# The non-identifiability corollary (`c:nonident`): the data marginal (and the curated prior)
+# depend on the truth only through its resolved marginal; the linear-Gaussian witness (eq:witness).
+[[lean_lib]]
+name = "NonIdentifiability"
+
+# The EM fixed points (`c:fix`): L[reg]=reg iff the reweight is a.e. 1 iff data marginals match.
+[[lean_lib]]
+name = "Fixpoint"
+
+# Posterior-mean / MMSE collapse (`p:mean`): the reconstruction is a function of its resolved
+# component (injective statistic->resolved map), zero coverage reused from p:map.
+[[lean_lib]]
+name = "PosteriorMean"
+
+# Exp-family regularity closing `p:mean`'s injective-gradient input: a strictly convex log-partition
+# has an injective gradient (strict monotonicity via segment restriction + 1D strictMonoOn_deriv).
+[[lean_lib]]
+name = "PosteriorMeanRegularity"
+
+# The Le Cam two-point testing lower bound: the near-null undetectability engine (`p:nearnull`).
+# ε-close data laws ⇒ every test has total error ≥ 1-ε; ε=0 recovers c:nonident's exact case.
+[[lean_lib]]
+name = "NearNullLeCam"
+
+# χ² controls total variation (no Pinsker): |P A - Q A| ≤ √(χ²) via Cauchy–Schwarz; supplies the
+# closeness ε feeding the Le Cam engine.
+[[lean_lib]]
+name = "ChiSquaredTV"
+
+# Closed-form Gaussian pdf-ratio integral ∫ pdf₁²/pdf₂ = exp((m₁-m₂)²/v): the χ² of two
+# same-variance Gaussians, the analytic input to the near-null bound.
+[[lean_lib]]
+name = "GaussianPdfIntegral"
+
+# Final wiring: χ²(N(m₁,v)‖N(m₂,v)) = exp((m₁-m₂)²/v)-1, fed into the Le Cam χ² bound to give the
+# quantitative near-null undetectability for a Gaussian mean shift (the c:nonident Δm→0 endpoint).
+[[lean_lib]]
+name = "GaussianChiSquared"
+
+# The spread-misreport case (same mean, different variance): χ²(N(m,v₁)‖N(m,v₂))=v₂/√(v₁(2v₂-v₁))-1,
+# the paper's primary near-null case at 1D.
+[[lean_lib]]
+name = "GaussianChiSquaredVar"
+
+# χ² invariance under a measurable equivalence (χ²(e#P‖e#Q)=χ²(P‖Q)): the whitening/rotation engine
+# for lifting the 1D Gaussian χ² to m dimensions.
+[[lean_lib]]
+name = "ChiSquaredInvariance"
+
+# χ² tensorization for products: χ²(P⊗P'‖Q⊗Q') = (1+χ²)(1+χ²')-1. Lets us drop common coordinates
+# (and gives the n-survey product); inducts to the d-fold pi product.
+[[lean_lib]]
+name = "ChiSquaredTensor"
+
+# d-fold χ² tensorization over a Fin n product: χ²(⨂Pᵢ‖⨂Qᵢ)=∏(1+χ²ᵢ)-1; also exposes the pi
+# absolute-continuity primitive (pi_ac) mathlib lacks.
+[[lean_lib]]
+name = "ChiSquaredPi"
+
+# Isotropic multivariate Gaussian χ²: χ²(N₀(·+c)‖N₀)=exp(‖c‖²)-1 on ℝⁿ (identity-covariance mean
+# shift), via toLp invariance + coordinatewise shift + tensorization + the 1D Gaussian χ².
+[[lean_lib]]
+name = "MultivariateGaussianChiSquared"
+
+# General-covariance multivariate Gaussian χ² (whitening by an invertible L):
+# χ²(N(μ₁,LLᵀ)‖N(μ₂,LLᵀ)) = exp(‖L⁻¹(μ₁-μ₂)‖²)-1 = exp((μ₁-μ₂)ᵀ(LLᵀ)⁻¹(μ₁-μ₂))-1, and the full
+# multivariate near-null undetectability via the Le Cam χ² bound.
+[[lean_lib]]
+name = "MultivariateGaussianWhitening"
+
+# Axis-aligned multivariate spread χ²: diagonal-scaling χ²(N₀‖N₀ scaled) via SCALING (vs shifting) +
+# tensorization; single-coordinate case gives the spread-misreport χ² s²/√(2s²-1)-1.
+[[lean_lib]]
+name = "MultivariateGaussianScale"
+
+# General-direction multivariate spread χ²: χ²(N(0,I)‖N(0,I+uuᵀ)) = (1+‖u‖²)/√(1+2‖u‖²)-1, by
+# rotating the perturbation onto a coordinate (χ² invariance) + charFun-uniqueness (ext_of_charFunDual)
+# reducing to the axis-aligned scaling; and its near-null undetectability. Closes the spread case.
+[[lean_lib]]
+name = "MultivariateGaussianSpread"
+
+# Reusable Gaussian-CDF analytic layer (Φ, standardization, interval closed form) that mathlib lacks.
+[[lean_lib]]
+name = "GaussianCDF"
+
+# The closed-form coverage shortfall (`p:cover`) and its overconfidence direction.
+[[lean_lib]]
+name = "Coverage"
+
+# Structural results: c:augment (de-freezing) and r:hilbert (function-space collapse).
+[[lean_lib]]
+name = "DeFreeze"
+
+# `p:recover` (ii): the loop's convergence half -- the whitened covariance recursion's fixed point,
+# its interior floor and monotone approach, and the geometric decay of the resolved mean error.
+[[lean_lib]]
+name = "RecoverConvergence"
+
+# The near-null refinements: p:nearnull (i)'s precision freeze bound (quadratic form vs operator
+# norm, exact freeze as the kernel endpoint) and p:mapnearnull (i)'s strong-convexity pinning tube.
+[[lean_lib]]
+name = "NearNullFreeze"
+
+# p:mean's remaining regularity input: existence of the log-partition's derivative by
+# differentiation under the integral (PosteriorMeanRegularity supplies its injectivity).
+[[lean_lib]]
+name = "LogPartitionSmooth"
+
+# The matrix reduction behind p:recover (ii)'s interior floor: Weyl-style additivity and the
+# congruence bound, variationally, feeding the scalar floor recursion of RecoverConvergence.
+[[lean_lib]]
+name = "MatrixFloor"
+
+# eq:nearnull-freeze: the Woodbury rearrangement putting the precision difference in factored
+# form Aᵀ B A, plus the PSD-difference bound giving the constant c.
+[[lean_lib]]
+name = "NearNullFactored"
+
+# p:nearnull(i) COMPOSED: |v^T(Sigma_q^-1 - Sigma_rho^-1)v| <= c ||Av||^2 as ONE theorem over
+# matrices (the Woodbury-factored middle B + the sandwich, previously in modules that never met),
+# with the exact-zero kernel endpoint and the max{a,b} PSD-difference form of the paper's c.
+[[lean_lib]]
+name = "NearNullComposed"
+
+# p:mapnearnull(i) COMPOSED: the pinning tube |v^T xhat - phi| <= |<Av,d>|/mu <= ||Av|| ||d||/mu
+# as ONE theorem (differentiable penalty sections), + the Av=0 exact-collapse endpoint.
+[[lean_lib]]
+name = "MapNearNullTube"
+
+# p:nearnull(ii) AT THE OPERATOR: general-covariance spread whitening, mean+spread misreport
+# chi^2 and Le Cam undetectability at the data law N(A mu, Ly Ly^T), iid n-survey tensorization,
+# and the machine crossover (1+chi^2)^n < 5/4 => every test's summed error > 1/2; Av=0 endpoints.
+[[lean_lib]]
+name = "NearNullOperator"
+
+# p:mean's multivariate log-partition gradient (dominated differentiation on an inner-product
+# space), gradient = conditional mean, in exactly the hLambda shape the collapse theorem
+# consumes -- and the composition discharging it (PosteriorMeanRegularity imported, not edited).
+[[lean_lib]]
+name = "LogPartitionGradient"
+
+# p:nearnull(i) HYPOTHESIS-FREE at the model: Sigma_post, G, S_y, Q DEFINED from (A, Gamma,
+# Sigma_rho, Sigma_star); every definitional relation proved (two-Woodbury included); the bound
+# with the paper's constant max(1/gamma, s/gamma^2) from PD/PSD + a variational spectral band.
+[[lean_lib]]
+name = "NearNullDefinitional"
+
+# The data law: y = Ax + eps (independent Gaussians) HAS law N(A mu, Ly Ly^T) -- proved by
+# charFun uniqueness; ||Ly^-1 u||^2 = <u, S_y^-1 u>; chi2(beta) <= beta^2/2 and the certified
+# crossover n t^2 < 2/5 => summed error > 1/2 in the paper's variable t.
+[[lean_lib]]
+name = "GaussianDataLaw"
+
+# p:mean CLOSED: envelope from E||x_R||<inf + variational-PD q; strict convexity of Lambda from
+# the affine-span condition (L2 Cauchy-Schwarz equality route, no Hessians); the composed collapse
+# with only model hypotheses; + E[Phi(a+bZ)] = Phi(a/sqrt(1+b^2)) for p:cover-na's aggregate.
+[[lean_lib]]
+name = "LogPartitionClosure"
+
+# r:selfcheck (SBC rank uniformity from exchangeability; prior-independent law; power = size),
+# the kinked-penalty sharpness witness of p:mapnearnull (unique minimizer, no collapse, no
+# C*eps^kappa bound), and r:sampler's mixture-freeze anchor.
+[[lean_lib]]
+name = "SelfCheckAndSharpness"
+
+# THE BUILT DEPENDENCY (Ali's standing order): the invertible self-adjoint square root Ly of the
+# data covariance S_y = T T^T + Leps Leps^T, via Matrix.toEuclideanCLM + CFC.sqrt; discharges
+# GaussianDataLaw's hcov, and the capstone operator-undetectability theorems (mean + spread,
+# n-survey, certified crossovers, and the Av = 0 blind endpoints) carry NO sqrt hypothesis.
+[[lean_lib]]
+name = "DataCovarianceSqrt"
+
+# p:mapnearnull(i) at the paper's EXACT hypothesis (kinked/subgradient sections, secant slopes,
+# sharp constant mu), the flat-direction noise-amplification witness (law N(0, s/eps^2) exact),
+# and (ii)'s conditional-variance bound E[Var(X|m)] <= c^2 E[D^2] via condExpL2 projection.
+[[lean_lib]]
+name = "MapNearNullSharp"
+
+# r:hilbert ASSEMBLED at the full separable-Hilbert carrier -- mathlib's condKernel supplies the
+# disintegration as a THEOREM (the former 'existence is an input' caveat); + r:ensemble's pooled
+# K-mixture: the readout-tilted K-atom fiber law of eq:pooled.
+[[lean_lib]]
+name = "HilbertAssembly"
+
+# Pinsker BUILT (absent from pinned mathlib): scalar two-point inequality + partition step ->
+# |P A - Q A| <= sqrt(KL/2); KL tensorization BUILT; 1-D Gaussian KL closed form; the paper's
+# exact crossover n < 2/t^2 (mean case hypothesis-free on Gaussian n-survey products; spread case
+# modulo the flagged per-survey KL bound hKL); + r:nonlinear's blind-derivative statement.
+[[lean_lib]]
+name = "PinskerAndNonlinear"
+
+# The LAST flagged hypothesis discharged: the spread misreport's exact per-survey Gaussian KL
+# (eq:nearnull-kl's '=' verbatim, beta = w (Av)^T S_y^-1 (Av)), its n-survey tensorization, and
+# the paper's crossover n < 2/t^2 on the physical record laws with no hypotheses beyond the
+# scenario. (Supersedes PinskerAndNonlinear's hKL-hypothesized spread crossover.)
+[[lean_lib]]
+name = "SpreadKL"
+
+# The MEAN misreport's exact per-survey Gaussian KL at the operator record law, its
+# n-survey tensorization, and the paper's crossover n < 2/t^2 -- the companion of SpreadKL,
+# closing eq:nearnull-cross verbatim for BOTH misreports on the physical record laws.
+[[lean_lib]]
+name = "MeanKL"
