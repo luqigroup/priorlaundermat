@@ -23,7 +23,7 @@ Fully machine-checked (statement **and** proof, no `sorry`):
 | Thm `p:map` — single-best collapse | `SingleBestCollapse.lean` | deterministic collapse; Gaussian rank/kernel sharpening; zero fiber-conditional **and** marginal blind coverage |
 | Prop `p:blind` — blind-fiber freeze | `BlindFreeze.lean` | the curated conditional equals the regularizer's; the Gaussian blind-block precision identity |
 | Cor `c:nonident` — undetectability | `NonIdentifiability.lean` | two truths differing only on the blind subspace train the identical prior; the linear–Gaussian witness |
-| Cor `c:fix` — fixed points (both directions) | `Fixpoint.lean` | a fixed point of the step ⟺ matching data marginals (χ²-rigidity) |
+| the fixed-point characterization (folded into p:law's discussion) | `Fixpoint.lean` | a fixed point of the step ⟺ matching data marginals (χ²-rigidity) |
 | `p:map`'s posterior-mean extension (discussion) — posterior-mean collapse (structural) | `PosteriorMean.lean` | the posterior mean is a function of its resolved component; zero blind coverage (given the exp-family regularity) |
 | Prop `p:cover` — coverage shortfall | `Coverage.lean`, `GaussianCDF.lean` | closed-form coverage; overconfidence when the belief is tighter than the truth; a frozen mean error only worsens it (∂C/∂δ<0) |
 | Cor `c:augment` — de-freezing | `DeFreeze.lean` | an added channel de-freezes exactly the directions it resolves |
