@@ -7,9 +7,6 @@ measurement-side check passes, against the blind subspace, where only blind grou
 the shortfall. Rows: seismic linearized-Born imaging (diffusion priors) and groundwater flow
 (normalizing-flow priors, pCN in the flow latent).
 
-The semilinear-wave example is not a row here: its coverage is read along the shadow roughness
-gradient at a single central level, which is the finding for that operator; putting it on a
-coverage-against-nominal-level axis would discard it.
 
 Each row keeps the coverage statistic its own example was scored with, rather than a re-derived
 one, so the grid agrees with the standalone figures built from the same caches.
