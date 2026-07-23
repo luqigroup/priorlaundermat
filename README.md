@@ -102,17 +102,6 @@ Fast, CPU-only, no downloads: the discrete adjoints against finite differences, 
 bases orthonormal and mutually orthogonal, and the flow's forward and inverse mutually inverting
 with the change-of-variables log-density.
 
-## Conventions
-
-- **Colours are semantic and fixed** (`priorlaundermat.style.PALETTE`): blue = oracle prior,
-  red = curated prior, green = truth. They match the paper's own colour definitions.
-- **Seismic sections are drawn at true physical proportions** (5.12 km × 3.2 km), never stretched
-  to the panel box, and every quantitative map carries a colour bar.
-- **Figures are vector PDFs** with embedded fonts, authored at the size they are printed at rather
-  than scaled up from a larger canvas, and checked for label collisions at that size.
-- **Seeds are explicit**: three training seeds for the seismic and groundwater priors, seed 0 for
-  the operators and evaluation sets. No ordering depends on file modification times or glob order.
-
 ## License
 
 MIT — see [LICENSE](LICENSE).
