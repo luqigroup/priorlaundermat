@@ -60,6 +60,7 @@ Every figure renders from a cache in seconds on a CPU; its inputs download on fi
 
 ```bash
 python scripts/fig_hero.py               # figures/hero.pdf — the seismic teaser
+python scripts/fig_emstep.py             # figures/ped_emstep.pdf — the one-EM-step schematic
 python scripts/fig_reliability_grid.py   # figures/reliability_grid.pdf — coverage on both operators
 python scripts/fig_darcy_posterior.py    # figures/fig_darcy_posterior.pdf — the groundwater posterior
 ```
