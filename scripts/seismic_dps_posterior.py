@@ -42,11 +42,11 @@ import numpy as np
 import torch
 from diffusers import DDPMScheduler
 
-from priorlaundermat.download import REPO, ensure
-from priorlaundermat.seismic import MUTE_END, N, NSRC, TAPER
-from priorlaundermat.seismic.blind import build_blind_subspace
-from priorlaundermat.seismic.born import parihaka_imager
-from priorlaundermat.seismic.priors import find_all_ckpts, load_eval, make_unet
+from resolvability.download import REPO, ensure
+from resolvability.seismic import MUTE_END, N, NSRC, TAPER
+from resolvability.seismic.blind import build_blind_subspace
+from resolvability.seismic.born import parihaka_imager
+from resolvability.seismic.priors import find_all_ckpts, load_eval, make_unet
 
 EVAL_H5 = "data/seismic/dataset_eval.h5"
 OUT = os.path.join(REPO, "results/seismic_dps_recon.npz")

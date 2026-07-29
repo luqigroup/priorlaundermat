@@ -15,7 +15,7 @@ them, ``||A v||^2 = sum_s ||born_one(v, s)||^2`` (the bare Born forward, no wate
   Point-spread-function leakage pushes a few candidates well above that; dropping them leaves a
   genuinely blind basis, rank 16 at N = 256.
 * The scrambled null is a seeded set of random orthonormal image directions -- the control
-  subspace, in which the laundering signature must not appear.
+  subspace, in which the inherited-overconfidence signature must not appear.
 
 Reads the two cached ``.npz`` files only: no operator solve, no dataset access, no GPU.
 """

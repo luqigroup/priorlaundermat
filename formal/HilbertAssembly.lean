@@ -10,7 +10,7 @@ import Mathlib.Probability.Kernel.Basic
 # `r:hilbert` assembled, and `r:ensemble`'s K-mixture (eq:pooled)
 
 This file discharges two "the disintegration is an input rather than a theorem" gaps of
-*Prior laundering*'s formal appendix, using mathlib's canonical disintegration
+the paper's formal appendix, using mathlib's canonical disintegration
 (`MeasureTheory.Measure.condKernel`, existence `Measure.disintegrate`, a.e. uniqueness
 `ProbabilityTheory.eq_condKernel_of_measure_eq_compProd`) instead of hypothesizing the
 disintegration `reg = νR ⊗ₘ κreg` as `BlindFreeze.curatedPrior_blind_freeze` did.

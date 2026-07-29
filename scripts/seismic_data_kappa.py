@@ -34,10 +34,10 @@ import h5py                                       # noqa: E402
 import numpy as np                                # noqa: E402
 import torch                                      # noqa: E402
 
-from priorlaundermat.download import REPO, ensure                       # noqa: E402
-from priorlaundermat.seismic import (DATASET_SEED, MUTE_END, N, N_TRAIN, NREC, NSRC,  # noqa: E402
+from resolvability.download import REPO, ensure                       # noqa: E402
+from resolvability.seismic import (DATASET_SEED, MUTE_END, N, N_TRAIN, NREC, NSRC,  # noqa: E402
                                      SIGMA, TAPER)
-from priorlaundermat.seismic.born import parihaka_imager                # noqa: E402
+from resolvability.seismic.born import parihaka_imager                # noqa: E402
 
 torch.set_num_threads(1)
 SEED_OFF = DATASET_SEED + N_TRAIN     # the evaluation rows continue the training split's seeds

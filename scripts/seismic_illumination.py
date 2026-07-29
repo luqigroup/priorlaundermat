@@ -18,8 +18,8 @@ import os
 
 import numpy as np
 
-from priorlaundermat.download import REPO
-from priorlaundermat.seismic.born import parihaka_imager
+from resolvability.download import REPO
+from resolvability.seismic.born import parihaka_imager
 
 OUT = os.path.join(REPO, "results/seismic_illum_incident.npz")
 

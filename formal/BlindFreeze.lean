@@ -5,10 +5,10 @@ import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.MeasureTheory.Measure.WithDensity
 
 /-!
-# Proposition `p:blind` of "Prior laundering": the blind-fiber freeze
+# Proposition `p:blind` of the paper: the blind-fiber freeze
 
 This file machine-checks the two parts of **Proposition `p:blind`** ("On the blind fibers the learned
-prior is the assumption", exact) of *Prior laundering*.
+prior is the assumption", exact) of the paper.
 
 ## Part 1 — the general fiber-conditional freeze (measure-theoretic, `GeneralFreeze`)
 
@@ -325,3 +325,13 @@ The one small surfacing is `[Nonempty B]` (a nontrivial blind subspace), needed 
 representative for the explicit density `f`. -/
 
 end BlindFreeze
+
+/-! ### Axiom audit
+
+The doc comment above claims these rest only on Lean's three standard axioms. These commands
+are what make that checkable rather than asserted: each must print `propext, Classical.choice,
+Quot.sound` and never `sorryAx`. -/
+
+#print axioms BlindFreeze.freeze_iterate
+#print axioms BlindFreeze.mixture_freeze
+#print axioms BlindFreeze.freeze_precision

@@ -28,9 +28,9 @@ import time
 import numpy as np
 import torch
 
-from priorlaundermat.download import REPO, ensure
-from priorlaundermat.seismic.blind import build_blind_subspace
-from priorlaundermat.seismic.priors import find_all_ckpts, load_eval, sample_prior
+from resolvability.download import REPO, ensure
+from resolvability.seismic.blind import build_blind_subspace
+from resolvability.seismic.priors import find_all_ckpts, load_eval, sample_prior
 
 ALPHA = 0.90
 OUT = os.path.join(REPO, "results/seismic_prior_seed_coords.npz")

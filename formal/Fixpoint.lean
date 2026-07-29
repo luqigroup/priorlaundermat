@@ -6,7 +6,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.Prod
 
 /-!
-# Corollary `c:fix` of "Prior laundering": the fixed points of the EM step
+# Corollary `c:fix` of the paper: the fixed points of the EM step
 
 This file machine-checks the tractable core of **Corollary `c:fix`** ("The assumptions the step
 leaves unchanged", regularizer of full support): the EM step `L[reg] = curatedPrior` leaves a
@@ -348,3 +348,12 @@ the truth to get `∫ truth(y)²/reg(y) dy = 1`, read this as `χ²(truth‖reg)
 -/
 
 end Fixpoint
+
+/-! ### Axiom audit
+
+The doc comment above claims these rest only on Lean's three standard axioms. These commands
+are what make that checkable rather than asserted: each must print `propext, Classical.choice,
+Quot.sound` and never `sorryAx`. -/
+
+#print axioms Fixpoint.data_marginal_eq_imp_fixed_point
+#print axioms Fixpoint.fixed_point_imp_data_marginal_eq

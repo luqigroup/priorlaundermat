@@ -7,8 +7,8 @@ import numpy as np
 import pytest
 import torch
 
-from priorlaundermat.groundwater import (DarcyForward, HINTFlow, StuartKLPrior, beskos_sensors)
-from priorlaundermat.groundwater.map_solver import _neg_log_post
+from resolvability.groundwater import (DarcyForward, HINTFlow, StuartKLPrior, beskos_sensors)
+from resolvability.groundwater.map_solver import _neg_log_post
 
 N = 16
 SIGMA_Y = 0.05

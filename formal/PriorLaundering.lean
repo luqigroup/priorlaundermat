@@ -2,11 +2,11 @@ import Mathlib.Probability.Kernel.Posterior
 import Mathlib.InformationTheory.KullbackLeibler.Basic
 
 /-!
-# Theorem 1 of "Prior laundering" (`p:law`): the EM-step identity
+# Theorem 1 of the paper (`p:law`): the EM-step identity
 
 This file machine-checks **Theorem 1** ("A legacy archive is one guess-then-correct step from the
-regularizer", label `p:law`) of the paper *Prior laundering: inherited, unverifiable uncertainty of
-generative priors trained on legacy reconstructions*.
+regularizer", label `p:law`) of the paper *Priors learned from legacy
+reconstructions inherit undetectable overconfidence*.
 
 ## Dictionary (paper ↔ mathlib)
 
@@ -431,3 +431,12 @@ theorem pLaw_partB
   exact hle
 
 end PriorLaundering
+
+/-! ### Axiom audit
+
+The doc comment above claims these rest only on Lean's three standard axioms. These commands
+are what make that checkable rather than asserted: each must print `propext, Classical.choice,
+Quot.sound` and never `sorryAx`. -/
+
+#print axioms PriorLaundering.pLaw_partB
+#print axioms PriorLaundering.comp_curatedPrior_eq_withDensity

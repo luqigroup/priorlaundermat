@@ -27,6 +27,38 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # repo-relative path -> (tier, direct-download URL).
 REGISTRY: dict[str, tuple[str, str]] = {
+    # --- results: the resolvability statement, certify, augment, and cutoff caches ---
+    "results/darcy_certify.npz":
+        ("data", "https://www.dropbox.com/scl/fi/ukjp38cxdpabvbeyj2hdh/darcy_certify.npz?rlkey=bv20n0nal9akcjtefrzz2rquq&dl=1"),
+    "results/darcy_core_channel.npz":
+        ("data", "https://www.dropbox.com/scl/fi/0bvsvy5pgrysabiwjo617/darcy_core_channel.npz?rlkey=n6rvyia4z48k6hgzwai358155&dl=1"),
+    "results/darcy_joint_archive.npz":
+        ("data", "https://www.dropbox.com/scl/fi/15ijik3kp3vg2u4m5bxdy/darcy_joint_archive.npz?rlkey=ikve3rkwumur52ke2zfgisgz0&dl=1"),
+    "results/darcy_augment_controls.npz":
+        ("data", "https://www.dropbox.com/scl/fi/4isnsyj0r5dah6td5hc2k/darcy_augment_controls.npz?rlkey=7sk9cnm6pypvddqlwq4zc9qxg&dl=1"),
+    "results/seismic_cutoff_sweep.npz":
+        ("data", "https://www.dropbox.com/scl/fi/apdycvbocloyznfor3dcp/seismic_cutoff_sweep.npz?rlkey=k4j5hgk8ciwjbfvbahne6ui78&dl=1"),
+    "results/seismic_gallery_samples.npz":
+        ("data", "https://www.dropbox.com/scl/fi/kz57x9smh85074pvjvmbc/seismic_gallery_samples.npz?rlkey=71vljqlqzvkgbpjv9hf908889&dl=1"),
+    # --- checkpoints: the groundwater flows, three seeds per arm plus the jointly curated arm ---
+    "data/checkpoints/darcy_flows/oracle_s10.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/op4aifuxtvy1epq7bsp78/oracle_s10.pth?rlkey=iw8vxxcu42xdj1u5pod0apdrr&dl=1"),
+    "data/checkpoints/darcy_flows/oracle_s11.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/qpokougq7451l9casv0m8/oracle_s11.pth?rlkey=4kriulnnl4v5drniv2twjmnp9&dl=1"),
+    "data/checkpoints/darcy_flows/oracle_s12.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/7q8ajyyuyj72pwuysza5h/oracle_s12.pth?rlkey=i4qh7alhnavqbistdww7ocqrh&dl=1"),
+    "data/checkpoints/darcy_flows/curated_s10.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/1s9q6gvd5lgnw85dl9xhd/curated_s10.pth?rlkey=ehat101cqa6l8a6487bmt7jc6&dl=1"),
+    "data/checkpoints/darcy_flows/curated_s11.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/5k1vnbvrh1mxkyb94gtp7/curated_s11.pth?rlkey=gt0uwe36pidk7pi66yvnwjwlw&dl=1"),
+    "data/checkpoints/darcy_flows/curated_s12.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/zad61imk1hkt85ejvzrcl/curated_s12.pth?rlkey=ln6a6evgb54f5upk90yoj5usg&dl=1"),
+    "data/checkpoints/darcy_flows/joint_s10.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/aim6r2sdk5uj4mnk87066/joint_s10.pth?rlkey=81eq49o0w61838bp4lys6tbfp&dl=1"),
+    "data/checkpoints/darcy_flows/joint_s11.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/xubig3cnhyvn5e7pfl13e/joint_s11.pth?rlkey=ipgvcds5e66cynbanvniryn9w&dl=1"),
+    "data/checkpoints/darcy_flows/joint_s12.pth":
+        ("checkpoints", "https://www.dropbox.com/scl/fi/3ky2io9aprffe9w6udfjs/joint_s12.pth?rlkey=btfvhc035mk3gjt9xwz919t7d&dl=1"),
     # --- data: seismic and groundwater inputs ---
     "data/darcy/darcy_laundering.h5":
         ("data", "https://www.dropbox.com/scl/fi/2zdbajsv9hxlkmlwh33sr/darcy_laundering.h5?rlkey=koet9vijaijmza4uxznwguucy&dl=1"),
@@ -99,7 +131,7 @@ def _hook(block: int, size: int, total: int) -> None:
         return
     done = min(block * size, total)
     scale, unit = (1e6, "MB") if total >= 1e6 else (1e3, "kB")
-    sys.stdout.write(f"\r[priorlaundermat] downloading {done / scale:7.1f} / "
+    sys.stdout.write(f"\r[resolvability] downloading {done / scale:7.1f} / "
                      f"{total / scale:.1f} {unit} ({100.0 * done / total:5.1f}%)")
     sys.stdout.flush()
     if done >= total:
@@ -136,7 +168,7 @@ def _ensure_one(rel: str) -> str:
     _, url = entry
 
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
-    print(f"[priorlaundermat] {rel} not found; fetching from the public mirror (once).")
+    print(f"[resolvability] {rel} not found; fetching from the public mirror (once).")
     tmp = path + ".part"
     try:
         urllib.request.urlretrieve(url, tmp, _hook)
@@ -153,7 +185,7 @@ def _ensure_one(rel: str) -> str:
     os.replace(tmp, path)
     sz = os.path.getsize(path)
     size = f"{sz / 1e6:.1f} MB" if sz >= 1e6 else f"{sz / 1e3:.0f} kB"
-    print(f"[priorlaundermat] saved {rel} ({size})")
+    print(f"[resolvability] saved {rel} ({size})")
     return path
 
 

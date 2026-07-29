@@ -22,7 +22,7 @@ alongside the tracked ``horizons`` they were built from. Rebuilding them from th
 volume is out of scope for this repository: it needs a Jython horizon tracker running under
 Mines-JTK on JDK 8, and an 11.6 GB seismic volume that is not redistributed here. The convolutional
 model that turns tracked horizons into reflectivity is
-:func:`priorlaundermat.seismic.pseudosynth.build_pseudosynth`.
+:func:`resolvability.seismic.pseudosynth.build_pseudosynth`.
 
 Safe and resumable: opens the file, writes one row, closes -- so it is always valid on disk, and
 re-running continues where it stopped. Each row's noise draw and shot ordering come from a
@@ -42,9 +42,9 @@ import h5py
 import numpy as np
 import torch
 
-from priorlaundermat.download import ensure
-from priorlaundermat.seismic import DATASET_SEED, MUTE_END, N, NREC, NSRC, N_TRAIN, SIGMA, TAPER
-from priorlaundermat.seismic.born import parihaka_imager
+from resolvability.download import ensure
+from resolvability.seismic import DATASET_SEED, MUTE_END, N, NREC, NSRC, N_TRAIN, SIGMA, TAPER
+from resolvability.seismic.born import parihaka_imager
 
 EPOCHS, LR = 5, 150.0
 # Soft-threshold strength for the archive's sparsity-promoting arm, in the AdaGrad metric. Set at

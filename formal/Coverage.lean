@@ -2,7 +2,7 @@ import GaussianCDF
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 
 /-!
-# Proposition `p:cover` of "Prior laundering": the closed-form coverage shortfall
+# Proposition `p:cover` of the paper: the closed-form coverage shortfall
 
 Machine-checks **Proposition `p:cover`** ("A closed-form coverage shortfall", linear–Gaussian).
 

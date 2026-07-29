@@ -15,7 +15,7 @@ Stage 2 -- the spectrum. Measure ``||A v||^2`` for every atom, with and without 
 for a seeded set of 48 random orthonormal directions as a control. Every claimed direction is
 therefore validated by an actual forward solve, not by the symbol that proposed it.
 
-The blind basis itself is not stored: :func:`priorlaundermat.seismic.blind.build_blind_subspace`
+The blind basis itself is not stored: :func:`resolvability.seismic.blind.build_blind_subspace`
 derives it from these two files by dropping the nominally blind atoms whose measured ``||A v||^2``
 leakage pushes above 1% of the resolved median, then orthonormalizing the survivors.
 
@@ -33,9 +33,9 @@ import time
 import numpy as np
 import torch
 
-from priorlaundermat.download import REPO
-from priorlaundermat.seismic import MUTE_END, N, TAPER
-from priorlaundermat.seismic.born import parihaka_imager
+from resolvability.download import REPO
+from resolvability.seismic import MUTE_END, N, TAPER
+from resolvability.seismic.born import parihaka_imager
 
 SCRAMBLE_SEED = 0
 KP = 3                       # atoms per tile per class

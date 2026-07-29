@@ -24,8 +24,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-from priorlaundermat.download import REPO, ensure  # noqa: E402
-from priorlaundermat.style import PALETTE, apply_paper_style  # noqa: E402
+from resolvability.download import REPO, ensure  # noqa: E402
+from resolvability.style import PALETTE, apply_paper_style  # noqa: E402
 
 apply_paper_style()
 plt.rcParams.update({"font.family": "serif", "mathtext.fontset": "cm"})
@@ -104,8 +104,8 @@ def seismic() -> dict:
     ground truth enters it. Reported as the mean curve over training seeds, per-seed open markers,
     and a joint samples-by-truths bootstrap band on the seed-pooled draws.
     """
-    from priorlaundermat.seismic.blind import build_blind_subspace
-    from priorlaundermat.seismic.priors import load_eval
+    from resolvability.seismic.blind import build_blind_subspace
+    from resolvability.seismic.priors import load_eval
 
     z = np.load(ensure("results/seismic_prior_seed_coords.npz"))
     nseed = int(z["SEEDS"])
@@ -168,7 +168,7 @@ def groundwater() -> dict:
     return out
 
 
-ROWS = [("Seismic Born imaging", seismic), ("Groundwater flow", groundwater)]
+ROWS = [("Seismic Born", seismic), ("Groundwater", groundwater)]
 COLS = [("resolved", "resolved subspace", "measurement-side checks pass"),
         ("blind", "blind subspace", "only blind ground truth reveals it")]
 
@@ -177,12 +177,12 @@ def main() -> None:
     # Compute before rendering: a missing cache should abort before any figure state exists.
     panels = [(rname, loader()) for rname, loader in ROWS]
 
-    fig, axes = plt.subplots(2, 2, figsize=(4.80, 5.47), sharex=True, sharey=True)
+    fig, axes = plt.subplots(2, 2, figsize=(6.15, 3.30), sharex=True, sharey=True)
     for i, (rname, data) in enumerate(panels):
         for j, (ckey, ctitle, csub) in enumerate(COLS):
             ax, p = axes[i, j], data[ckey]
             lev = p["lev"]
-            ax.plot([0.0, 1.02], [0.0, 1.02], color="0.55", ls="--", lw=1.1, zorder=1)
+            ax.plot([0.42, 1.02], [0.42, 1.02], color="0.55", ls="--", lw=1.1, zorder=1)
             for arm, col, mk in (("curated", MAD, "s"), ("oracle", EM, "o")):
                 lo, hi = p["ci"][arm]
                 ax.fill_between(lev, lo, hi, color=col, alpha=0.30, lw=0, zorder=3)
@@ -197,14 +197,15 @@ def main() -> None:
             ax.tick_params(labelsize=9)
             if i == 0:
                 hcol = "#5e3c99" if j == 0 else "#e66101"      # resolved purple / blind orange
-                ax.annotate(ctitle, xy=(0.5, 1.14), xycoords="axes fraction", ha="center",
+                ax.annotate(ctitle, xy=(0.5, 1.08), xycoords="axes fraction", ha="center",
                             fontsize=10.5, fontweight="bold", color=hcol)
-                ax.annotate(csub, xy=(0.5, 1.05), xycoords="axes fraction", ha="center",
-                            fontsize=9, color="0.3")
             if i == len(ROWS) - 1:
                 ax.set_xlabel("nominal credible level $1-\\alpha$", fontsize=9.5)
             if j == 0:
-                ax.set_ylabel(f"{rname}\ncoverage", fontsize=9.5)
+                ax.set_ylabel(f"{rname}\ncoverage", fontsize=8.5)
+            a = int(np.argmin(np.abs(lev - 0.9)))  # the anchor level, not a positional accident
+            print(f"{rname:22s} {ckey:8s} oracle={p['cov']['oracle'][a]:.3f} "
+                  f"curated={p['cov']['curated'][a]:.3f} (at level {lev[a]:.2f})", flush=True)
 
     axes[0, 0].legend(fontsize=9, loc="lower right", bbox_to_anchor=(1.0, 0.008),
                       labelspacing=0.22, handlelength=1.5, handletextpad=0.45, borderpad=0.36,
@@ -212,26 +213,26 @@ def main() -> None:
     for ax in axes.ravel():
         for s in ("top", "right"):
             ax.spines[s].set_visible(False)
-    fig.subplots_adjust(left=0.1, right=0.975, bottom=0.075, top=0.86, hspace=0.17, wspace=0.12)
-    # Equal data spans and a square box, so the calibration diagonal is genuinely 45 degrees and a
-    # vertical deviation is drawn the same size as the horizontal one it is compared against.
-    # set_box_aspect alone equalizes the box, not the data units. Both limits are set once, since
-    # sharex/sharey make a per-panel call global anyway.
-    axes[0, 0].set_xlim(0.0, 1.02)
+    fig.subplots_adjust(left=0.105, right=0.985, bottom=0.115, top=0.845, hspace=0.24, wspace=0.10)
+    # WIDE, SHORT panels filling the text width. Both axes still span the same data range, set
+    # once (sharex/sharey make per-panel calls global). The shallow diagonal COMPRESSES vertical
+    # deviations, understating the coverage gap rather than flattering it -- the conservative
+    # direction. The 'calibrated' label rotation is computed from the display transform below,
+    # so it follows the panel shape.
+    axes[0, 0].set_xlim(0.44, 1.01)
     axes[0, 0].set_ylim(0.0, 1.02)
-    # The x tick at 1.0 is omitted: the left column's "1.00" and the right column's "0.00"
-    # otherwise run together across the panel gap.
-    axes[0, 0].set_xticks([0.0, 0.25, 0.5, 0.75])
-    axes[0, 0].set_yticks([0.0, 0.25, 0.5, 0.75, 1.0])
-    for ax in axes.ravel():
-        ax.set_box_aspect(1.0)
+    # No x tick at the shared edge, so the left column's last label and the right column's first
+    # cannot run together across the narrow gap.
+    axes[0, 0].set_xticks([0.5, 0.7, 0.9])
+    axes[0, 0].set_yticks([0.0, 0.5, 1.0])
+    # No overall title: the claim lives in the caption; panel labels only.
     fig.canvas.draw()
     p0 = axes[0, 0].transData.transform((0.5, 0.5))
     p1 = axes[0, 0].transData.transform((0.9, 0.9))
     cal_rot = float(np.degrees(np.arctan2(p1[1] - p0[1], p1[0] - p0[0])))
     for i in range(len(ROWS)):
         for j in range(len(COLS)):
-            axes[i, j].text(0.62, 0.40, "calibrated", fontsize=9, color="0.5", rotation=cal_rot,
+            axes[i, j].text(0.62, 0.30, "calibrated", fontsize=8, color="0.5", rotation=cal_rot,
                             rotation_mode="anchor", ha="center", va="center", zorder=6)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     fig.savefig(OUT, dpi=300, bbox_inches="tight")

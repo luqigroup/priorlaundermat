@@ -29,10 +29,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.gridspec import GridSpec  # noqa: E402
 
-from priorlaundermat.download import REPO, ensure  # noqa: E402
-from priorlaundermat.style import PALETTE, apply_paper_style, extent_km  # noqa: E402
-from priorlaundermat.seismic.blind import build_blind_subspace  # noqa: E402
-from priorlaundermat.seismic.priors import load_eval  # noqa: E402
+from resolvability.download import REPO, ensure  # noqa: E402
+from resolvability.style import PALETTE, apply_paper_style, extent_km  # noqa: E402
+from resolvability.seismic.blind import build_blind_subspace  # noqa: E402
+from resolvability.seismic.priors import load_eval  # noqa: E402
 
 apply_paper_style()
 plt.rcParams.update({"font.family": "serif", "mathtext.fontset": "cm"})

@@ -19,8 +19,8 @@ import os
 import numpy as np
 import torch
 
-from priorlaundermat.download import REPO
-from priorlaundermat.seismic.priors import find_all_ckpts, sample_prior
+from resolvability.download import REPO
+from resolvability.seismic.priors import find_all_ckpts, sample_prior
 
 OUT = os.path.join(REPO, "results/seismic_prior_samples.npz")
 

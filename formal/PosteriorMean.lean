@@ -1,7 +1,7 @@
 import SingleBestCollapse
 
 /-!
-# Proposition `p:mean` of "Prior laundering": posterior-mean archives collapse the same way
+# Proposition `p:mean` of the paper: posterior-mean archives collapse the same way
 
 This file machine-checks the structural core of **Proposition `p:mean`** ("Posterior-mean archives
 collapse the same way", linear operator, Gaussian noise, any prior with a finite first moment).
@@ -147,3 +147,12 @@ proof surfaces:
 -/
 
 end PosteriorMean
+
+/-! ### Axiom audit
+
+The doc comment above claims these rest only on Lean's three standard axioms. These commands
+are what make that checkable rather than asserted: each must print `propext, Classical.choice,
+Quot.sound` and never `sorryAx`. -/
+
+#print axioms PosteriorMean.posterior_mean_collapse
+#print axioms PosteriorMean.posterior_mean_coverage_zero

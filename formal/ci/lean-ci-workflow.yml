@@ -1,7 +1,7 @@
 name: Lean formal proofs (p:law)
 
 # Machine-checks the Lean 4 + mathlib formalization of Theorem 1 (`p:law`) of the
-# "Prior laundering" paper, under `formal/`. A green run = the Lean kernel accepted the
+# paper, under `formal/`. A green run = the Lean kernel accepted the
 # proofs. The job downloads the PREBUILT mathlib olean cache (`lake exe cache get`), so it
 # never compiles mathlib from source.
 

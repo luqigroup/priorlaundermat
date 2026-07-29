@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Generate the groundwater prior-laundering dataset: truths, surveys, and the MAP archive.
+"""Generate the groundwater legacy-curation dataset: truths, surveys, and the MAP archive.
 
 For each of ``n_train + n_eval`` truths drawn from the KL prior (xi ~ N(0, I_d)) this forms the
 true log-permeability field, solves the head, samples the 33 sensors with Gaussian noise, and
@@ -22,8 +22,8 @@ import time
 import h5py
 import numpy as np
 
-from priorlaundermat.download import REPO
-from priorlaundermat.groundwater import (DarcyForward, StuartKLPrior, beskos_sensors,
+from resolvability.download import REPO
+from resolvability.groundwater import (DarcyForward, StuartKLPrior, beskos_sensors,
                                          map_reconstruct)
 
 

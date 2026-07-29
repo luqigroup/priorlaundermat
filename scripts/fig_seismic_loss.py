@@ -16,9 +16,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from priorlaundermat.download import REPO, ensure                 # noqa: E402
-from priorlaundermat.seismic.priors import find_ckpt              # noqa: E402
-from priorlaundermat.style import PALETTE, apply_paper_style      # noqa: E402
+from resolvability.download import REPO, ensure                 # noqa: E402
+from resolvability.seismic.priors import find_ckpt              # noqa: E402
+from resolvability.style import PALETTE, apply_paper_style      # noqa: E402
 apply_paper_style(); plt.rcParams.update({"font.family": "serif", "mathtext.fontset": "cm"})
 EM, MAD = PALETTE["em"], PALETTE["mad"]
 OUT = os.path.join(REPO, "figures/fig_seismic_loss.pdf")
@@ -26,8 +26,8 @@ OUT = os.path.join(REPO, "figures/fig_seismic_loss.pdf")
 
 def main():
     fig, axes = plt.subplots(1, 2, figsize=(5.125, 1.95))
-    panels = [("curated", "(a)  curated  (legacy least-squares-migration archive)", MAD),
-              ("oracle", "(b)  oracle  (broadband truths)", EM)]
+    panels = [("curated", "(a)  curated  (legacy least-squares migration)", MAD),
+              ("oracle", "(b)  oracle  (broadband reflectivity)", EM)]
     for ax, (tag, title, col) in zip(axes, panels):
         path, _ = find_ckpt(tag)
         h = torch.load(ensure(path), map_location="cpu", weights_only=False)["hist"]

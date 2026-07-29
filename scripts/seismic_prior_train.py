@@ -29,11 +29,11 @@ import torch
 import torch.nn.functional as F
 from diffusers import DDPMScheduler
 
-from priorlaundermat.download import REPO, ensure
-from priorlaundermat.seismic import MUTE_END, TAPER
-from priorlaundermat.seismic.priors import BASE, CKPT, make_unet
-from priorlaundermat.seismic.pseudosynth import water_mute
-from priorlaundermat.utils import Normalizer
+from resolvability.download import REPO, ensure
+from resolvability.seismic import MUTE_END, TAPER
+from resolvability.seismic.priors import BASE, CKPT, make_unet
+from resolvability.seismic.pseudosynth import water_mute
+from resolvability.utils import Normalizer
 
 TRAIN_H5 = "data/seismic/dataset_train.h5"
 DATA_KEY = {"oracle": "broadband_dm", "curated": "lsrtm5"}

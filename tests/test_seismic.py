@@ -11,12 +11,12 @@ import os
 import numpy as np
 import pytest
 
-from priorlaundermat.download import REPO
-from priorlaundermat.seismic import MUTE_END, N, TAPER
-from priorlaundermat.seismic import priors
-from priorlaundermat.seismic.blind import build_blind_subspace, verify_blind_gap
-from priorlaundermat.seismic.priors import load_eval
-from priorlaundermat.seismic.pseudosynth import ricker, water_mute
+from resolvability.download import REPO
+from resolvability.seismic import MUTE_END, N, TAPER
+from resolvability.seismic import priors
+from resolvability.seismic.blind import build_blind_subspace, verify_blind_gap
+from resolvability.seismic.priors import load_eval
+from resolvability.seismic.pseudosynth import ricker, water_mute
 
 
 @pytest.fixture(scope="module")
@@ -51,7 +51,7 @@ def test_blind_atoms_sit_below_the_floor(sub):
 def test_blind_gap_holds_on_the_shipped_window(sub):
     """The prerequisite: on the blind subspace the truths carry far more than the archive does.
 
-    Without this gap there is nothing for a prior to launder, so it is the first thing to check.
+    Without this gap there is nothing for a curated prior to inherit, so it is the first thing to check.
     The scrambled control must show no such gap.
     """
     truth = load_eval("broadband_dm", 300, 340)

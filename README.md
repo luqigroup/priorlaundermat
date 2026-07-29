@@ -1,9 +1,9 @@
-# Prior laundering
+# resolvability
 
 Code, data, and machine-checked proofs for
 
-> **Prior laundering: learned priors with inherited, undetectable overconfidence.**
-> Ali Siahkoohi and Sina Alemohammad. Submitted to *Transactions on Machine Learning Research*.
+> **Priors learned from legacy reconstructions inherit undetectable overconfidence.**
+> Ali Siahkoohi and Sina Alemohammad. Preprint, 2026.
 
 ## Overview
 
@@ -14,7 +14,7 @@ there is the archive's — and nothing in deployment reveals it: truths differin
 directions induce identical data laws, and self-consistency diagnostics pass whatever the prior
 believes.
 
-This repository reproduces the paper's two deployed examples and its theory:
+This repository reproduces the paper's two examples and its theory:
 
 | example | operator | prior | what it shows |
 |---|---|---|---|
@@ -26,8 +26,8 @@ The theoretical results are machine-checked in Lean 4 (see [Formal verification]
 ## Installation
 
 ```bash
-git clone https://github.com/luqigroup/priorlaundermat
-cd priorlaundermat
+git clone https://github.com/luqigroup/resolvability
+cd resolvability
 pip install -e .
 ```
 
@@ -40,19 +40,19 @@ Regenerating the seismic dataset additionally needs [Devito](https://www.devitop
 ## Data and checkpoints
 
 The datasets and trained checkpoints each example needs are hosted publicly and **downloaded
-automatically on first use** — each script calls `priorlaundermat.download.ensure` on what it
+automatically on first use** — each script calls `resolvability.download.ensure` on what it
 needs, which is a no-op once the file is on disk. There is nothing to fetch by hand, and no
 figures to download: the figures are produced by the scripts below.
 
 To pre-fetch a tier instead of letting it stream in:
 
 ```python
-from priorlaundermat.download import ensure_tier
+from resolvability.download import ensure_tier
 ensure_tier("checkpoints")     # the trained priors, three seeds per arm
 ensure_tier("datasets")        # the full seismic training and evaluation archives
 ```
 
-The full path→URL table is `priorlaundermat/download.py`.
+The full path→URL table is `resolvability/download.py`.
 
 ## Reproducing the paper's figures
 

@@ -9,12 +9,11 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.Typeclasses.NoAtoms
 
 /-!
-# Theorem `p:map` of "Prior laundering": the single-best collapse (linear-algebra core)
+# Theorem `p:map` of the paper: the single-best collapse (linear-algebra core)
 
 This file machine-checks the **linear-algebra core** of Theorem `p:map`
 ("Single-best curation collapses the blind-fiber uncertainty") of the paper
-*Prior laundering: inherited, unverifiable uncertainty of generative priors trained on legacy
-reconstructions*, together with the elementary deterministic-collapse statement and the
+*Priors learned from legacy reconstructions inherit undetectable overconfidence*, together with the elementary deterministic-collapse statement and the
 measure-theoretic zero-coverage mechanism.
 
 The paper's `p:map` has three layers.  We formalize each at the level the task asks for:
@@ -476,3 +475,12 @@ from `Measure.compProd_apply` (the tower) and the per-fiber `prod_coverage_zero`
 
 end SingleBestCollapse
 
+/-! ### Axiom audit
+
+The doc comment above claims these rest only on Lean's three standard axioms. These commands
+are what make that checkable rather than asserted: each must print `propext, Classical.choice,
+Quot.sound` and never `sorryAx`. -/
+
+#print axioms SingleBestCollapse.coverage_zero
+#print axioms SingleBestCollapse.marginal_coverage_zero
+#print axioms SingleBestCollapse.linear_blind_invariance

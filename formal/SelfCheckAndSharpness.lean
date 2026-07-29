@@ -5,9 +5,9 @@ import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
 
 /-!
-# `r:selfcheck` and the sharpness witnesses of "Prior laundering"
+# `r:selfcheck` and the sharpness witnesses of the paper
 
-This file machine-checks three items of *Prior laundering*:
+This file machine-checks three items of the paper:
 
 ## Part 1 — `r:selfcheck`: SBC's rank is uniform under EVERY exchangeable prior
 

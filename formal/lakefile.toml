@@ -1,8 +1,8 @@
 name = "PriorLaundering"
-defaultTargets = ["PriorLaundering", "SingleBestCollapse", "BlindFreeze", "NonIdentifiability", "Fixpoint", "PosteriorMean", "PosteriorMeanRegularity", "NearNullLeCam", "ChiSquaredTV", "GaussianPdfIntegral", "GaussianChiSquared", "GaussianCDF", "Coverage", "DeFreeze", "RecoverConvergence", "NearNullFreeze", "LogPartitionSmooth", "MatrixFloor", "NearNullFactored", "ChiSquaredInvariance", "ChiSquaredPi", "ChiSquaredTensor", "GaussianChiSquaredVar", "MultivariateGaussianChiSquared", "MultivariateGaussianScale", "MultivariateGaussianSpread", "MultivariateGaussianWhitening", "NearNullComposed", "MapNearNullTube", "NearNullOperator", "LogPartitionGradient", "NearNullDefinitional", "GaussianDataLaw", "LogPartitionClosure", "SelfCheckAndSharpness", "DataCovarianceSqrt", "MapNearNullSharp", "HilbertAssembly", "PinskerAndNonlinear", "SpreadKL", "MeanKL"]
+defaultTargets = ["PriorLaundering", "SingleBestCollapse", "BlindFreeze", "NonIdentifiability", "Fixpoint", "PosteriorMean", "PosteriorMeanRegularity", "NearNullLeCam", "ChiSquaredTV", "GaussianPdfIntegral", "GaussianChiSquared", "GaussianCDF", "Coverage", "DeFreeze", "RecoverConvergence", "NearNullFreeze", "LogPartitionSmooth", "MatrixFloor", "NearNullFactored", "ChiSquaredInvariance", "ChiSquaredPi", "ChiSquaredTensor", "GaussianChiSquaredVar", "MultivariateGaussianChiSquared", "MultivariateGaussianScale", "MultivariateGaussianSpread", "MultivariateGaussianWhitening", "NearNullComposed", "MapNearNullTube", "NearNullOperator", "LogPartitionGradient", "NearNullDefinitional", "GaussianDataLaw", "LogPartitionClosure", "SelfCheckAndSharpness", "DataCovarianceSqrt", "MapNearNullSharp", "HilbertAssembly", "PinskerAndNonlinear", "SpreadKL", "MeanKL", "HonestInterval", "AuditPrice", "CertifiedBand", "CoverageDamping", "ExchangeRate", "MapNearNullCoverage", "RidgeMarginal", "RecoverWhitening"]
 
 # Machine-checked formalization of Theorem 1 (`p:law`, the EM-step identity) of
-# "Prior laundering". Mathlib pinned to a release whose toolchain matches
+# the paper. Mathlib pinned to a release whose toolchain matches
 # `lean-toolchain` (leanprover/lean4:v4.31.0) so that `lake exe cache get`
 # downloads PREBUILT oleans (no from-source mathlib compile).
 
@@ -228,3 +228,51 @@ name = "SpreadKL"
 # closing eq:nearnull-cross verbatim for BOTH misreports on the physical record laws.
 [[lean_lib]]
 name = "MeanKL"
+
+# c:honest -- the density-bound coverage lemma (via mathlib condKernel), the Gaussian density
+# maximum (built), and the display: constant information law + unbounded witness spread =>
+# inf coverage 0; uniform coverage forces infinite expected length.
+[[lean_lib]]
+name = "HonestInterval"
+
+# p:audit, exact parts -- chi-square as the pushforward law of ||Z||^2, sum/scaling laws,
+# the standardization pipelines, power at arbitrary threshold, level over the composite null.
+# The closing asymptotic k-approximation is deliberately not formalized.
+[[lean_lib]]
+name = "AuditPrice"
+
+# p:certify -- split-conformal validity of the certified blind band: exact rank law from
+# exchangeability (reusing SelfCheckAndSharpness), the band-is-an-interval identity, the
+# finiteness-threshold iff, the verbatim certify endpoint, and the conditional-validity form.
+[[lean_lib]]
+name = "CertifiedBand"
+
+# eq:covmu -- the advertised fiber spread is >= mu_v^{-1/2} (defect identity; equality iff
+# eigenvector, exact at 1-D), the coverage bound, and both monotonicity-in-damping readings
+# via the variational Loewner antitonicity of NearNullDefinitional.
+[[lean_lib]]
+name = "CoverageDamping"
+
+# r:exchange -- the two currencies at one blind direction: the survey price n_star from the
+# checked SpreadKL/MeanKL crossovers, the reference price k from AuditPrice, and the divergence
+# of the first as ||Av||^2 -> 0 while the second does not involve A at all.
+[[lean_lib]]
+name = "ExchangeRate"
+
+# p:mapnearnull(ii) -- the coverage tail: conditional Markov per readout fiber, the narrowest
+# credible interval's length bound, and the coverage bound it forces; Av = 0 gives the exact
+# zero-coverage endpoint via mathlib's condKernel.
+[[lean_lib]]
+name = "MapNearNullCoverage"
+
+# p:mapnearnull(iii) -- the ridge-marginal computation, the E||d||^2 comparison, and the 2-D
+# counterexample showing the bound is not improvable without the strong-convexity hypothesis.
+[[lean_lib]]
+name = "RidgeMarginal"
+
+# p:recover(ii)'s remaining reduction -- the whitening/pseudoinverse congruence taking the
+# matrix recursion to the diagonal one RecoverConvergence solves, which the README previously
+# listed as not machine-checked.
+[[lean_lib]]
+name = "RecoverWhitening"
+

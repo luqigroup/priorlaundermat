@@ -4,7 +4,7 @@ import Mathlib.LinearAlgebra.Prod
 import SingleBestCollapse
 
 /-!
-# Two structural results of "Prior laundering": `c:augment` (de-freezing) and `r:hilbert`
+# Two structural results of the paper: `c:augment` (de-freezing) and `r:hilbert`
 
 ## `c:augment` (general half) — an added channel de-freezes exactly the directions it resolves
 
@@ -138,3 +138,13 @@ end Hilbert
 -/
 
 end DeFreeze
+
+/-! ### Axiom audit
+
+The doc comment above claims these rest only on Lean's three standard axioms. These commands
+are what make that checkable rather than asserted: each must print `propext, Classical.choice,
+Quot.sound` and never `sorryAx`. -/
+
+#print axioms DeFreeze.defreeze_decomposition
+#print axioms DeFreeze.defreeze_disjoint
+#print axioms DeFreeze.hilbert_collapse

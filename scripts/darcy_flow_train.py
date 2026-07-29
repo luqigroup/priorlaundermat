@@ -2,7 +2,7 @@
 """Train the two learned groundwater priors over Darcy KL coefficients: oracle vs curated.
 
 The ORACLE flow is fit to the true-field coefficients ``xi_true`` -- the truth's own law -- and the
-CURATED flow to the MAP-archive coefficients ``xi_map``, the laundered legacy reconstructions.
+CURATED flow to the MAP-archive coefficients ``xi_map``, the legacy reconstructions.
 Both are HINT normalizing flows over the d=100 whitened KL coefficients, trained by maximum
 likelihood with save-best-validation and early stopping.
 
@@ -20,9 +20,9 @@ import h5py
 import numpy as np
 import torch
 
-from priorlaundermat.download import REPO, ensure
-from priorlaundermat.groundwater import HINTFlow
-from priorlaundermat.utils import Normalizer, PolynomialDecayLR
+from resolvability.download import REPO, ensure
+from resolvability.groundwater import HINTFlow
+from resolvability.utils import Normalizer, PolynomialDecayLR
 
 DATA = "data/darcy/darcy_laundering.h5"
 

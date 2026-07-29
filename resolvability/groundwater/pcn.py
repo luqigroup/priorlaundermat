@@ -20,11 +20,11 @@ import h5py
 import numpy as np
 import torch
 
-from priorlaundermat.download import ensure
-from priorlaundermat.groundwater.darcy import DarcyForward, beskos_sensors
-from priorlaundermat.groundwater.hint_flow import HINTFlow
-from priorlaundermat.groundwater.kl_prior import StuartKLPrior
-from priorlaundermat.utils import Normalizer
+from resolvability.download import ensure
+from resolvability.groundwater.darcy import DarcyForward, beskos_sensors
+from resolvability.groundwater.hint_flow import HINTFlow
+from resolvability.groundwater.kl_prior import StuartKLPrior
+from resolvability.utils import Normalizer
 
 DATA = "data/darcy/darcy_laundering.h5"
 LEVELS = np.array([0.5, 0.6, 0.7, 0.8, 0.9, 0.95])

@@ -3,9 +3,9 @@ requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "priorlaundermat"
+name = "resolvability"
 version = "1.0.0"
-description = "Prior laundering: priors trained on legacy reconstructions inherit undetectable overconfidence"
+description = "Priors learned from legacy reconstructions inherit undetectable overconfidence"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
@@ -31,10 +31,10 @@ seismic = ["devito>=4.8"]
 test = ["pytest"]
 
 [project.urls]
-Repository = "https://github.com/luqigroup/priorlaundermat"
+Repository = "https://github.com/luqigroup/resolvability"
 
 [tool.setuptools.packages.find]
-include = ["priorlaundermat*"]
+include = ["resolvability*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

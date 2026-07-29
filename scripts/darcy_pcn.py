@@ -35,8 +35,8 @@ import time
 
 import numpy as np
 
-from priorlaundermat.download import REPO
-from priorlaundermat.groundwater import (LEVELS, coverage, iat_sokal, load_flow, map_reconstruct,
+from resolvability.download import REPO
+from resolvability.groundwater import (LEVELS, coverage, iat_sokal, load_flow, map_reconstruct,
                                          pcn_posterior, setup)
 
 # Per-mode chain settings: the values that produced the released caches.

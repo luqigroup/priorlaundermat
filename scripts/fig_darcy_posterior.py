@@ -22,8 +22,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import gridspec
 
-from priorlaundermat.download import REPO, ensure
-from priorlaundermat.style import PALETTE, apply_paper_style
+from resolvability.download import REPO, ensure
+from resolvability.style import PALETTE, apply_paper_style
 
 apply_paper_style()
 plt.rcParams.update({"font.family": "serif", "mathtext.fontset": "cm"})

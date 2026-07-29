@@ -22,8 +22,8 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 from matplotlib.patches import Ellipse, FancyArrowPatch  # noqa: E402
 
-from priorlaundermat.download import REPO  # noqa: E402
-from priorlaundermat.style import PALETTE, apply_paper_style  # noqa: E402
+from resolvability.download import REPO  # noqa: E402
+from resolvability.style import PALETTE, apply_paper_style  # noqa: E402
 
 apply_paper_style()
 plt.rcParams.update({"font.family": "serif", "mathtext.fontset": "cm"})

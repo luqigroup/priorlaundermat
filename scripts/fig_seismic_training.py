@@ -19,10 +19,10 @@ import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib import gridspec  # noqa: E402
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from priorlaundermat.download import REPO                          # noqa: E402
-from priorlaundermat.seismic import MUTE_END, N                    # noqa: E402
-from priorlaundermat.seismic.priors import find_ckpt, sample_prior, load_eval  # noqa: E402
-from priorlaundermat.style import PALETTE, apply_paper_style, extent_km        # noqa: E402
+from resolvability.download import REPO                          # noqa: E402
+from resolvability.seismic import MUTE_END, N                    # noqa: E402
+from resolvability.seismic.priors import find_ckpt, sample_prior, load_eval  # noqa: E402
+from resolvability.style import PALETTE, apply_paper_style, extent_km        # noqa: E402
 apply_paper_style(); plt.rcParams.update({"font.family": "serif", "mathtext.fontset": "cm"})
 EM, MAD = PALETTE["em"], PALETTE["mad"]
 OUT = os.path.join(REPO, "figures/fig_seismic_training.pdf")
@@ -44,8 +44,8 @@ def main():
     fig = plt.figure(figsize=(5.125, 3.62))
     outer = gridspec.GridSpec(2, 1, figure=fig, hspace=0.23,
                               left=0.085, right=0.995, top=0.925, bottom=0.012)
-    rows = [("curated", "curated prior  (legacy least-squares-migration archive)", MAD),
-            ("oracle", "oracle prior  (broadband truths)", EM)]
+    rows = [("curated", "curated prior  (legacy least-squares migration)", MAD),
+            ("oracle", "oracle prior  (broadband reflectivity)", EM)]
     for r, (tag, title, col) in enumerate(rows):
         inner = outer[r].subgridspec(2, NGAL, hspace=0.05, wspace=0.04)
         for rr, (imgs, lab) in enumerate([(real[tag], "real"), (samp[tag], "sample")]):

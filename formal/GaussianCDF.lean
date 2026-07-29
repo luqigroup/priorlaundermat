@@ -3,7 +3,7 @@ import Mathlib.Probability.CDF
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 /-!
-# A small Gaussian-CDF layer for "Prior laundering"
+# A small Gaussian-CDF layer for the paper
 
 Reusable analytic helper mathlib lacks: the standard-normal CDF `Φ`, its order/symmetry properties,
 the interval-probability (change-of-variables) identity, and the coverage closed form used by

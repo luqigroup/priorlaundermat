@@ -48,7 +48,8 @@ property `E[Var(X|m)] = E[(X − E[X|m])²]` (mathlib's `condVar` + `integral_co
 
 with `X = vᵀx̂`, `Y = φ(Π x̂)` (measurable w.r.t. the conditioning σ-algebra), `D = ‖d‖`.
 The square-integrability of `D` is an explicit hypothesis — the paper derives it for the Gaussian
-data term by objective comparison, a step not formalized here.
+data term by objective comparison, a step since closed in `RidgeMarginal.lean`
+(`misfit_comparison → expected_grad_sq_lt_top`).
 
 No `sorry`/`admit`; `#print axioms` on every public result at the end.
 -/

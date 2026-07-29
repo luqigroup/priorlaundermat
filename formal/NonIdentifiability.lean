@@ -4,7 +4,7 @@ import Mathlib.Probability.Kernel.Composition.CompMap
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 /-!
-# Corollary `c:nonident` of "Prior laundering": the shortfall is not identifiable
+# Corollary `c:nonident` of the paper: the shortfall is not identifiable
 
 This file machine-checks **Corollary `c:nonident`** ("The shortfall is not identifiable from the
 measurements", for any likelihood that factors through the forward operator).
@@ -154,3 +154,14 @@ the single hypothesis that the likelihood factors through the resolved coordinat
 -/
 
 end NonIdentifiability
+
+/-! ### Axiom audit
+
+The doc comment above claims these rest only on Lean's three standard axioms. These commands
+are what make that checkable rather than asserted: each must print `propext, Classical.choice,
+Quot.sound` and never `sorryAx`. -/
+
+#print axioms NonIdentifiability.nonident_curatedPrior
+#print axioms NonIdentifiability.curatedPrior_depends_only_on_data_marginal
+#print axioms NonIdentifiability.witness_cov_annihilated
+#print axioms NonIdentifiability.witness_mean_annihilated
