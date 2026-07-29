@@ -3,7 +3,7 @@
 Code, data, and machine-checked proofs for
 
 > **Prior laundering: learned priors with inherited, undetectable overconfidence.**
-> Ali Siahkoohi and Sina Alemohammad. Submitted to *SIAM/ASA Journal on Uncertainty Quantification*.
+> Ali Siahkoohi and Sina Alemohammad. Submitted to *Transactions on Machine Learning Research*.
 
 ## Overview
 
