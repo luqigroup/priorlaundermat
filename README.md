@@ -56,13 +56,17 @@ The full path→URL table is `priorlaundermat/download.py`.
 
 ## Reproducing the paper's figures
 
-Every figure renders from a cache in seconds on a CPU; its inputs download on first use:
+Most figures render from a cache in seconds on a CPU; inputs download on first use. (`fig_seismic_training` draws fresh unconditional samples and is fastest on a GPU.)
 
 ```bash
 python scripts/fig_hero.py               # figures/hero.pdf — the seismic teaser
 python scripts/fig_emstep.py             # figures/ped_emstep.pdf — the one-EM-step schematic
 python scripts/fig_reliability_grid.py   # figures/reliability_grid.pdf — coverage on both operators
 python scripts/fig_darcy_posterior.py    # figures/fig_darcy_posterior.pdf — the groundwater posterior
+python scripts/fig_seismic_training.py   # figures/fig_seismic_training.pdf — seismic prior samples vs training data
+python scripts/fig_seismic_loss.py       # figures/fig_seismic_loss.pdf — seismic prior train/val loss
+python scripts/fig_darcy_training.py     # figures/fig_darcy_training.pdf — groundwater flow samples vs training fields
+python scripts/fig_darcy_loss.py         # figures/fig_darcy_loss.pdf — groundwater flow train/val NLL
 ```
 
 Output goes to `figures/`.
